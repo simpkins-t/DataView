@@ -1,0 +1,7 @@
+*.pyc
+.python-version
+.DS_Store
+*.csv
+*.xml
+miscellany/
+*.sqlite3
