@@ -1,0 +1,99 @@
+{% load staticfiles %}
+<html>
+
+<head>
+    <title> {{ title }} </title>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/ad829c9ca6.js"></script>
+    <link rel="stylesheet" src="{% static 'intake/css/frontend.css' %}" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <style>
+        body {
+            padding-top: 50px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            padding-bottom: 9px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 51px;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            padding: 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            /* Scrollable contents if viewport is shorter than content. */
+            border-right: 1px solid #eee;
+        }
+
+        .sidebar {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .sidebar .nav {
+            margin-bottom: 20px;
+        }
+
+        .sidebar .nav-item {
+            width: 100%;
+        }
+
+        .sidebar .nav-item+.nav-item {
+            margin-left: 0;
+        }
+
+        .sidebar .nav-link {
+            border-radius: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-toggleable-xl navbar-inverse fixed-top bg-inverse">
+        <a class="navbar-brand" href="{% url 'site-list' %}">DataView</a>
+        {% if user.is_authenticated %}
+        <button class="btn btn-outline-warning ml-auto">Logout</button>
+        {% else %}
+        <button class="btn btn-outline-success ml-auto">Login</button>
+        {% endif %}
+    </nav>
+    <div class="container-fluid">
+        <div id="row">
+            <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><span class="fa fa-tachometer" aria-hidden="true"> </span> Dashboard <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><span class="fa fa-sun-o" aria-hidden="true"> </span> Sensors </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><span class="fa fa-area-chart" aria-hidden="true" disabled> </span> Reports </a>
+                    </li>
+                    {% if user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/"><span class="fa fa-cogs" aria-hidden="true" disabled> </span> Manage </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+            {% block content %} {% endblock %}
+        </main>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+{% extends "intake/base.html" %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <h4>Overview</h4>
+            <p>There are <strong>{{ sensor_count }}</strong> {% if sensor_count != 1 %}sensors{% else %}sensor{% endif %} at <strong>{{ site_count }}</strong> {% if site_count != 1 %}sites{% else %}site{% endif %}.</p>
+            <p>There have been a total of <strong>{{ last_day }}</strong> kWh generated in the last day, <strong>{{ last_month }}</strong> in the last month, and <strong>{{ last_year }}</strong> in the last year.</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-12">
+            <h4>Sites</h4>
+        </div>
+        {% for site in sites %}
+        <div class="col-lg-3 col-md-4 col-sm-12">
+            <div class="card card-inverse" style="background-color: #333; border-color: #333; margin-bottom: 20px">
+                <div class="card-block">
+                    <h4 class="card-title">{{ site.name }}</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ site.location }}: {{ site.sensor_count }} {% if site.sensor_count != 1 %} sensors {% else %} sensor {% endif %}</h6>
+                    <p class="card-text">{{ site.description }}</p>
+                    <a href="{% url 'site-detail' site_id=site.id %}" class="btn btn-outline-warning">Sensors</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

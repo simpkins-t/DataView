@@ -1,0 +1,10 @@
+.nav-link > .data-pill {
+    color: #f0ad4e;
+    background-image: none;
+    background-color: transparent;
+    border-color: #f0ad4e;
+}
+
+.nav-link > .data-pill > .active .data-pill > {
+
+}

@@ -6,4 +6,5 @@ class GeneratedAdmin(admin.ModelAdmin):
 
 admin.site.register(Credential)
 admin.site.register(SensorEndpoint)
+admin.site.register(SensorSite)
 admin.site.register(Generated, GeneratedAdmin)
