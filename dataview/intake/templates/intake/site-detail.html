@@ -1,41 +1,27 @@
-{% extends "intake/base.html" %}
+{% extends "intake/base.html" %} {% block content %}
 
-{% block content %}
-
-
-    <div class="row">
-        {% for sensor in sensors %}
-        <div class="col-lg-3 col-md-4 col-sm-12">
-            <div class="card card-inverse" style="background-color: #333; border-color: #333; margin-bottom: 20px">
-                <div class="card-img-top" id="graph-{{ sensor.id }}" style="width: 100%; height: 15%">
-                </div>
-                <div class="card-block" style="padding-top:0;">
-                    <h4 class="card-title">{{ sensor.name }}</h4>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ sensor.url_string }}</h6>
-                    <div class="card-body" style="margin-bottom: 8px"> {{ sensor.generated_day }} kWh in last day</div>
-                    <a href="{% url 'sensor-detail' sensor_id=sensor.id %}" class="btn btn-outline-warning">Details</a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+<div class="row">
+    <div class="col-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>URL</th>
+                    <th>Last Day</th>
+                    <th>Last Week</th>
+            </thead>
+            <tbody>
+            {% for sensor in sensors %}
+                <tr>
+                    <td><a href="{% url 'sensor-detail' sensor_id=sensor.id %}">{{ sensor.name }}</a></td>
+                    <td>{{ sensor.url_string }}</td>
+                    <td>{{ sensor.generated_day }}</td>
+                    <td>{{ sensor.generated_week  }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
-
-    <script>
-        {% for sensor in sensors %}
-        
-            new Morris.Line({
-                element: 'graph-{{ sensor.id }}',
-                data: {{ sensor.last_day_coarse|safe }},
-                xkey: 'timestamp',
-                ykeys: ['generated'],
-                labels: ["Generated"],
-                pointSize: 0,
-                hideHover: 'always',
-                grid: false,
-                lineColors: ['#f0ad4e'],
-                yLabelFormat: () => { return "" }
-            });
-        {% endfor %}
-    </script>
+</div>
 
 {% endblock %}
